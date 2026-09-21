@@ -1,189 +1,803 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
 <title>Hub da Sala</title>
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏫</text></svg>">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --chalkboard: #24372E;
-    --chalk: #F5F1E6;
-    --paper: #FFFDF7;
-    --paper-line: #E8DFC8;
-    --ink: #2B2B26;
-    --pencil: #6B6459;
-    --marker: #E2542B;
-    --marker-soft: #F6DCCF;
-    --safe-top: env(safe-area-inset-top, 0px);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-    box-sizing: border-box;
-  }
-  *{ box-sizing: inherit; }
-  html, body{ height: 100%; margin: 0; }
-  body{
-    font-family: "Inter", system-ui, sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
+
+:root{
+  --bg:#f4f7f5;
+  --card:#ffffff;
+  --text:#20251f;
+  --muted:#737a73;
+
+  --green:#24372E;
+  --green-light:#dfe9e3;
+
+  --orange:#E2542B;
+  --orange-light:#fbe3da;
+
+  --border:#e6ebe7;
+
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  min-height:100%;
+}
+
+body{
+  font-family:"Inter",sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%, #e7f0ea 0, transparent 30%),
+    radial-gradient(circle at 100% 20%, #fce7de 0, transparent 28%),
+    var(--bg);
+
+  color:var(--text);
+
+  min-height:100vh;
+
+  padding-bottom:calc(85px + var(--safe-bottom));
+}
+
+
+/* =========================
+   TOPO
+========================= */
+
+header{
+  padding:
+    calc(28px + var(--safe-top))
+    22px
+    28px;
+
+  background:var(--green);
+  color:white;
+
+  border-radius:0 0 30px 30px;
+
+  position:relative;
+  overflow:hidden;
+}
+
+header::before{
+  content:"";
+
+  position:absolute;
+
+  width:180px;
+  height:180px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.05);
+
+  right:-60px;
+  top:-70px;
+}
+
+header::after{
+  content:"";
+
+  position:absolute;
+
+  width:120px;
+  height:120px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.04);
+
+  left:-50px;
+  bottom:-70px;
+}
+
+.header-content{
+  position:relative;
+  z-index:2;
+
+  max-width:520px;
+  margin:auto;
+}
+
+.top-line{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:13px;
+
+  background:rgba(255,255,255,.12);
+
+  font-size:22px;
+}
+
+.logo-text{
+  font-family:"Baloo 2",sans-serif;
+  font-size:1.15rem;
+  font-weight:700;
+}
+
+.clock{
+  font-size:.78rem;
+  font-weight:600;
+
+  padding:7px 10px;
+
+  background:rgba(255,255,255,.1);
+
+  border-radius:999px;
+}
+
+header h1{
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:2rem;
+  line-height:1;
+
+  margin:28px 0 5px;
+
+  font-weight:800;
+}
+
+header p{
+  margin:0;
+
+  color:#cbd5ce;
+
+  font-size:.88rem;
+}
+
+
+/* =========================
+   CONTEÚDO
+========================= */
+
+main{
+  width:100%;
+  max-width:520px;
+
+  margin:auto;
+
+  padding:24px 20px 30px;
+}
+
+.welcome{
+  margin-bottom:18px;
+}
+
+.welcome h2{
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:1.25rem;
+
+  margin:0;
+}
+
+.welcome p{
+  margin:3px 0 0;
+
+  color:var(--muted);
+
+  font-size:.82rem;
+}
+
+
+/* =========================
+   CARD PRINCIPAL
+========================= */
+
+.featured{
+  display:flex;
+  align-items:center;
+  gap:16px;
+
+  padding:20px;
+
+  background:var(--green);
+
+  color:white;
+
+  border-radius:22px;
+
+  text-decoration:none;
+
+  box-shadow:
+    0 12px 30px rgba(36,55,46,.16);
+
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
+}
+
+.featured:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 16px 35px rgba(36,55,46,.22);
+}
+
+.featured:active{
+  transform:scale(.98);
+}
+
+.featured-icon{
+  width:55px;
+  height:55px;
+
+  flex-shrink:0;
+
+  border-radius:17px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(255,255,255,.12);
+
+  font-size:27px;
+}
+
+.featured-text{
+  flex:1;
+}
+
+.featured-text h2{
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:1.15rem;
+
+  margin:0 0 2px;
+}
+
+.featured-text p{
+  margin:0;
+
+  color:#cbd5ce;
+
+  font-size:.78rem;
+}
+
+.featured-arrow{
+  font-size:22px;
+}
+
+
+/* =========================
+   SEÇÃO
+========================= */
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin:27px 0 12px;
+}
+
+.section-title h3{
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:1rem;
+
+  margin:0;
+}
+
+.section-title span{
+  color:var(--muted);
+
+  font-size:.7rem;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.grid{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:12px;
+}
+
+.site-card{
+  min-height:150px;
+
+  padding:18px;
+
+  border:1px solid var(--border);
+
+  border-radius:20px;
+
+  background:rgba(255,255,255,.85);
+
+  text-decoration:none;
+
+  color:var(--text);
+
+  display:flex;
+  flex-direction:column;
+
+  justify-content:space-between;
+
+  box-shadow:
+    0 5px 18px rgba(0,0,0,.035);
+
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease,
+    border-color .15s ease;
+}
+
+.site-card:hover{
+  transform:translateY(-3px);
+
+  border-color:#d6ded8;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.07);
+}
+
+.site-card:active{
+  transform:scale(.97);
+}
+
+.card-icon{
+  width:45px;
+  height:45px;
+
+  border-radius:14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:var(--orange-light);
+
+  font-size:22px;
+}
+
+.site-card:nth-child(2) .card-icon{
+  background:#e7edf9;
+}
+
+.card-bottom{
+  margin-top:15px;
+}
+
+.card-title{
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:1rem;
+
+  font-weight:700;
+
+  margin:0 0 2px;
+}
+
+.card-description{
+  font-size:.72rem;
+
+  color:var(--muted);
+
+  margin:0;
+}
+
+.badge{
+  display:inline-block;
+
+  margin-top:8px;
+
+  font-size:.62rem;
+
+  font-weight:700;
+
+  padding:4px 8px;
+
+  border-radius:999px;
+
+  background:#eef0ed;
+
+  color:#777d77;
+}
+
+
+/* =========================
+   EM BREVE
+========================= */
+
+.disabled{
+  opacity:.65;
+
+  cursor:default;
+}
+
+.disabled:hover{
+  transform:none;
+
+  box-shadow:
+    0 5px 18px rgba(0,0,0,.035);
+}
+
+
+/* =========================
+   RODAPÉ / NAVEGAÇÃO
+========================= */
+
+.bottom-nav{
+  position:fixed;
+
+  left:50%;
+  bottom:0;
+
+  transform:translateX(-50%);
+
+  width:min(520px,100%);
+
+  padding:
+    10px
+    18px
+    calc(10px + var(--safe-bottom));
+
+  background:rgba(255,255,255,.92);
+
+  backdrop-filter:blur(15px);
+
+  -webkit-backdrop-filter:blur(15px);
+
+  border-top:1px solid var(--border);
+
+  display:flex;
+
+  justify-content:space-around;
+
+  z-index:20;
+}
+
+.nav-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+
+  color:#929892;
+
+  font-size:.63rem;
+
+  font-weight:600;
+}
+
+.nav-item span:first-child{
+  font-size:20px;
+}
+
+.nav-item.active{
+  color:var(--green);
+}
+
+
+/* =========================
+   ANIMAÇÕES
+========================= */
+
+@keyframes appear{
+
+  from{
+    opacity:0;
+    transform:translateY(12px);
   }
 
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+header{
+  animation:appear .45s ease;
+}
+
+main{
+  animation:appear .55s ease;
+}
+
+.featured{
+  animation:appear .6s ease;
+}
+
+.site-card{
+  animation:appear .7s ease;
+}
+
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media(min-width:600px){
+
   header{
-    background: var(--chalkboard);
-    color: var(--chalk);
-    padding: calc(28px + var(--safe-top)) 24px 26px;
-    background-image:
-      repeating-linear-gradient(rgba(245,241,230,0.035) 0px, rgba(245,241,230,0.035) 1px, transparent 1px, transparent 26px);
-  }
-  header h1{
-    font-family: "Baloo 2", sans-serif;
-    font-weight: 700;
-    font-size: 1.6rem;
-    margin: 0;
-  }
-  header p{
-    margin: 4px 0 0;
-    font-size: 0.88rem;
-    color: #C9CBBE;
+    padding-left:40px;
+    padding-right:40px;
   }
 
   main{
-    flex: 1;
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 22px 20px calc(28px + var(--safe-bottom));
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+    padding-top:32px;
   }
 
-  a.site-btn, span.site-btn{
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    text-decoration: none;
-    color: var(--ink);
-    background: #fff;
-    border: 1px solid var(--paper-line);
-    border-radius: 16px;
-    padding: 18px 18px;
-    transition: transform 0.12s ease, border-color 0.12s ease;
-  }
-  a.site-btn:active{ transform: scale(0.98); }
-  a.site-btn:hover{ border-color: var(--marker); }
+  .bottom-nav{
+    border:1px solid var(--border);
 
-  .site-btn .icon{
-    flex-shrink: 0;
-    width: 46px;
-    height: 46px;
-    border-radius: 12px;
-    background: var(--marker-soft);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .site-btn .icon svg{
-    width: 24px; height: 24px;
-    stroke: var(--marker);
-    fill: none;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .site-btn .text{ flex: 1; min-width: 0; }
-  .site-btn .text h2{
-    font-family: "Baloo 2", sans-serif;
-    font-size: 1.05rem;
-    margin: 0 0 2px;
-  }
-  .site-btn .text p{
-    margin: 0;
-    font-size: 0.82rem;
-    color: var(--pencil);
-  }
-  .site-btn .arrow{
-    flex-shrink: 0;
-    width: 18px; height: 18px;
-    stroke: var(--pencil);
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    border-radius:22px 22px 0 0;
   }
 
-  /* Placeholder (site ainda não existe) */
-  span.site-btn{
-    cursor: default;
-    opacity: 0.75;
-  }
-  span.site-btn:hover{ border-color: var(--paper-line); }
-  span.site-btn .icon{ background: #F1EEE3; }
-  span.site-btn .icon svg{ stroke: var(--pencil); }
-  .badge{
-    flex-shrink: 0;
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--pencil);
-    background: #F1EEE3;
-    padding: 3px 9px;
-    border-radius: 999px;
-  }
+}
 
-  @media (min-width: 600px){
-    header{ padding-left: 40px; padding-right: 40px; }
-    main{ padding-top: 32px; }
-  }
 </style>
 </head>
+
+
 <body>
 
+
 <header>
-  <h1>Hub da Sala</h1>
-  <p>Tudo o que a turma usa, em um lugar só</p>
+
+  <div class="header-content">
+
+    <div class="top-line">
+
+      <div class="logo">
+
+        <div class="logo-icon">
+          🏫
+        </div>
+
+        <div class="logo-text">
+          Hub da Sala
+        </div>
+
+      </div>
+
+      <div class="clock" id="clock">
+        00:00
+      </div>
+
+    </div>
+
+
+    <h1>
+      Tudo em um só lugar.
+    </h1>
+
+    <p>
+      Sistemas e recursos que a turma usa no dia a dia.
+    </p>
+
+  </div>
+
 </header>
+
 
 <main>
 
-  <a class="site-btn" href="https://fila-do-banheiro.vercel.app">
-    <span class="icon">
-      <svg viewBox="0 0 24 24"><path d="M6 21V8a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v13"/><path d="M6 12h7"/><path d="M17 21v-6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v6"/></svg>
-    </span>
-    <span class="text">
-      <h2>Fila do banheiro</h2>
-      <p>Controle de saídas da sala</p>
-    </span>
-    <svg class="arrow" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+
+  <div class="welcome">
+
+    <h2>
+      Olá, turma! 👋
+    </h2>
+
+    <p>
+      O que você precisa acessar?
+    </p>
+
+  </div>
+
+
+  <!-- SISTEMA PRINCIPAL -->
+
+  <a
+    class="featured"
+    href="https://fila-do-banheiro.vercel.app"
+  >
+
+    <div class="featured-icon">
+      🚻
+    </div>
+
+    <div class="featured-text">
+
+      <h2>
+        Fila do banheiro
+      </h2>
+
+      <p>
+        Controle de saídas da sala
+      </p>
+
+    </div>
+
+    <div class="featured-arrow">
+      →
+    </div>
+
   </a>
 
-  <span class="site-btn">
-    <span class="icon">
-      <svg viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l4 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8a4 4 0 0 1 0 8"/><path d="M18 5a8 8 0 0 1 0 14"/></svg>
-    </span>
-    <span class="text">
-      <h2>Avisos</h2>
-      <p>Recados e comunicados da turma</p>
-    </span>
-    <span class="badge">Em breve</span>
-  </span>
 
-  <span class="site-btn">
-    <span class="icon">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M2 20h20"/><path d="M9 20v-2h6v2"/></svg>
+  <div class="section-title">
+
+    <h3>
+      Outros sistemas
+    </h3>
+
+    <span>
+      2 disponíveis em breve
     </span>
-    <span class="text">
-      <h2>Notebooks</h2>
-      <p>Controle de uso dos notebooks</p>
-    </span>
-    <span class="badge">Em breve</span>
-  </span>
+
+  </div>
+
+
+  <div class="grid">
+
+
+    <!-- AVISOS -->
+
+    <div class="site-card disabled">
+
+      <div class="card-icon">
+        📢
+      </div>
+
+      <div class="card-bottom">
+
+        <h2 class="card-title">
+          Avisos
+        </h2>
+
+        <p class="card-description">
+          Recados e comunicados da turma
+        </p>
+
+        <span class="badge">
+          EM BREVE
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- NOTEBOOKS -->
+
+    <div class="site-card disabled">
+
+      <div class="card-icon">
+        💻
+      </div>
+
+      <div class="card-bottom">
+
+        <h2 class="card-title">
+          Notebooks
+        </h2>
+
+        <p class="card-description">
+          Controle de uso dos notebooks
+        </p>
+
+        <span class="badge">
+          EM BREVE
+        </span>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
 
 </main>
+
+
+<!-- NAVEGAÇÃO INFERIOR -->
+
+<nav class="bottom-nav">
+
+  <div class="nav-item active">
+
+    <span>🏠</span>
+
+    <span>
+      Início
+    </span>
+
+  </div>
+
+
+  <div class="nav-item">
+
+    <span>📚</span>
+
+    <span>
+      Sistemas
+    </span>
+
+  </div>
+
+
+  <div class="nav-item">
+
+    <span>⚙️</span>
+
+    <span>
+      Configurações
+    </span>
+
+  </div>
+
+</nav>
+
+
+<script>
+
+function updateClock(){
+
+  const now = new Date();
+
+  const hours =
+    String(now.getHours()).padStart(2,"0");
+
+  const minutes =
+    String(now.getMinutes()).padStart(2,"0");
+
+  document.getElementById("clock").textContent =
+    `${hours}:${minutes}`;
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+</script>
+
 
 </body>
 </html>
